@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>Change a map's style</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://unpkg.com/geobuf@3.0.2/dist/geobuf.js"></script>
+    <script src="https://unpkg.com/pbf@3.0.5/dist/pbf.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+</head>
+<body>
+    <div class="wrapper-container">
+        <div class="map-container">
+            <div class="top-tab">
+                <div id="geocoder"></div>
+
+                <div class="tabs-right">
+                    <div class="tab">VIEW ALL</div>
+                    <div class="tab">FAVORITES</div>
+                </div>
+            </div>
+
+            <div id="map"></div>
+        </div>
+
+        <div class="side-tab">
+            <div class="tab-header">
+                <div class="tab-title">Explore markets</div>
+            </div>
+
+            <div class="visual-tabs">
+
+                <div class="visual-tab active" id="tab-1" data-id="DISTRESSED">
+                    <span><i class="fa fa-eye-slash"></i></span>
+                    <span class="tab-text">Distressed</span>
+                </div>
+
+                <div class="visual-tab" id="tab-1" data-id="LIKELY TO SELL">
+                    <span><i class="fa fa-dollar-sign"></i></span>
+                    <span class="tab-text">Likely to Sell</span>
+                </div>
+
+                <div class="visual-tab" id="tab-1" data-id="BAD CREDIT">
+                    <span><i class="fa fa-credit-card"></i></span>
+                    <span class="tab-text">Bad Credit</span>
+                </div>
+
+                <div class="visual-tab" id="tab-1" data-id="DIVORCED">
+                    <span><i class="fa fa-credit-card"></i></span>
+                    <span class="tab-text">Divorced</span>
+                </div>
+
+                <div class="visual-tab" id="tab-1" data-id="Absentee Owners">
+                    <span><i class="fa fa-credit-card"></i></span>
+                    <span class="tab-text">Absentee Owners</span>
+                </div>
+
+                <div class="visual-tab" id="tab-1" data-id="DOWNSIZE">
+                    <span><i class="fa fa-credit-card"></i></span>
+                    <span class="tab-text">Downsize</span>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-input">
+                    <span>
+                        <i class="fa fa-filter"></i>
+                    </span>
+                    <input type="text" name="filter-by" id="filter-by" placeholder="Filter by neighborhood">    
+                </div>
+            </div>
+
+            <div class="items-section">
+                <div class="items-header">
+                    <div class="column-name">Lead Count</div>
+                    <div class="column-name info">Market</div>
+                    <div class="column-name">Add</div>
+                </div>
+
+                <div class="items-list" id="item-list">
+                    <div class="item">
+
+                        <div class="visual-amount">
+                            <span>262k</span>
+                        </div>
+    
+                        <div class="visual-description">
+                            <div class="code">74873 - Tecumseh</div>
+
+                            <div class="address d-none">
+                                405 Tecumseh,  Pottawatomie County OK
+                            </div>
+
+                            <div class="price">
+                                <b>Price: </b>$500
+                            </div>
+
+                            <a href="" class="buy-btn">
+                                Buy Now
+                            </a>
+
+                            <!-- // zipcode
+                            // price: 20cents per lead.
+                            // buy now button
+                            // Amount Price -> Lead Count. -->
+                        </div>
+    
+                        <div class="favorites">
+                            <i class="fa fa-heart"></i>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoiZGF1ZGk5NyIsImEiOiJjanJtY3B1bjYwZ3F2NGFvOXZ1a29iMmp6In0.9ZdvuGInodgDk7cv-KlujA';
+    const map = new mapboxgl.Map({
+        container: 'map', 
+        // style: 'mapbox://styles/mapbox/light-v10',
+        style: 'mapbox://styles/daudi97/cl6jb4rs900a314pd73vm6y3f',
+        center: {lng: -104.76085605124626, lat: 38.79115730659646}, 
+        zoom: 2.1
+    });
+
+    // geocoder:
+    const geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        types: 'country,region,place,postcode,locality,neighborhood',
+        placeholder:'Search for city...'
+    });
+    
+    geocoder.addTo('#geocoder');
+
+    geocoder.on('result', function({result}) {
+        map.flyTo({
+            center:result.center, 
+            zoom:9
+        });
+
+        // map.fitBounds(result.bbox, { padding:80 });
+
+        // get the state;
+        let stateName;
+
+        result.content.forEach(ctx => {
+            if(cts.id.includes('region')) {
+                stateName = ctx.text;
+            }
+        });
+
+        if(stateName) {
+            updateStateFeatureOpacity(stateName);
+            updateMarkers();
+        }
+    });
+
+    // handle results
+    map.on('load', function(e) {
+        d3.csv('master_counts.csv')
+            .then(data => {
+                visualInstance.setData(data);                
+            })
+            .catch(console.error);
+        
+        // point data
+        map.addSource('leads', {
+            type:'geojson',
+            data:{"type":"FeatureCollection", "features":[]},
+            cluster: true,
+            clusterRadius: 50,
+            clusterMinPoints:5,
+            clusterMaxZoom:13
+        });
+
+        map.addLayer({
+            id: 'clusters',
+            type: 'circle',
+            source: 'leads',
+            minzoom:9,
+            filter: ['has', 'point_count'],
+            paint: {
+                'circle-color': [
+                    'step',
+                    ['get', 'point_count'],
+                    '#51bbd6',
+                    100,
+                    '#f1f075',
+                    750,
+                    '#f28cb1'
+                ],
+                'circle-radius': [
+                    'step',
+                    ['get', 'point_count'],
+                    20,
+                    100,
+                    30,
+                    750,
+                    40
+                ],
+                'circle-opacity':1
+            },
+            layout:{
+                // visibility:'none'
+            }
+        });
+
+        map.addLayer({
+            id: 'cluster-count',
+            type: 'symbol',
+            source: 'leads',
+            minzoom:9,
+            filter: ['has', 'point_count'],
+            layout: {
+                'text-field': '{point_count_abbreviated}',
+                'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                'text-size': 12,
+                // visibility:'none'
+            }
+        });
+ 
+
+        // county layer
+        map.addSource('counties', {
+            type:'geojson',
+            data:{"type":"FeatureCollection", "features":[]}
+        });
+
+        map.addLayer({
+            id:'counties',
+            source:'counties',
+            minzoom:4,
+            maxzoom:8.5,
+            type:'fill',
+            paint:{
+                'fill-color':'#6CF4F6',
+                'fill-opacity':0,
+            }
+        });
+
+        // usa states layer
+        map.addSource('states', {
+            type:'geojson',
+            data:{"type":"FeatureCollection", "features":[]}
+        });
+
+        map.addLayer({
+            id:'states',
+            source:'states',
+            maxzoom:7,
+            type:'fill',
+            paint:{
+                'fill-color':'#fff',
+                'fill-opacity':0.8,
+            }
+        });
+
+        map.addLayer({
+            id:'states-line',
+            source:'states',
+            type:'line',
+            maxzoom:7,
+            paint:{
+                'line-color':'#fff',
+                'line-width':[
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    2,
+                    1.2,
+                    22,
+                    5
+                ],
+            }
+        });
+
+
+        // // colorado zip codes
+        // map.addSource('zipcodes', {
+        //     type:'geojson',
+        //     data:'colorado_zips.geojson'
+        // });
+
+        // map.addLayer({
+        //     id:'zipcodes',
+        //     source:'zipcodes',
+        //     minzoom:8,
+        //     type:'fill',
+        //     paint:{
+        //         'fill-color':'#fff',
+        //         'fill-opacity':0.1,
+        //         'fill-outline-color':'#9421FA'
+        //     }
+        // });
+
+        // map.addLayer({
+        //     id:'zipcodes-line',
+        //     source:'zipcodes',
+        //     minzoom:8,
+        //     type:'line',
+        //     paint:{
+        //         'line-width':0.8,
+        //         'line-color':'#9421FA'
+        //     }
+        // });
+
+        // click event on states
+        map.on('click', 'states', function(e) {
+            let feature = e.features[0];        
+
+            // bounds
+            fitToFeatureBounds(feature)
+
+            // the feature opacity: reduces
+            let stateName = feature.properties.NAME_1;
+            updateStateFeatureOpacity(stateName);
+        });
+
+        map.on('mouseenter', 'states', handleMouseEnter);
+        map.on('mouseleave', 'states', handleMouseLeave);
+
+
+        // county click
+        map.on('mouseenter', 'counties', handleMouseEnter);
+        map.on('mouseleave', 'counties', handleMouseLeave);
+
+        map.on('click', 'counties', function(e) {
+            let zoom = map.getZoom();
+            console.log(e.lngLat);
+
+            let feature = e.features[0];
+            console.log(feature.toJSON());
+
+            // zoom to the 
+            // fitToFeatureBounds(feature);
+            map.flyTo({
+                center:e.lngLat,
+                zoom:9
+            });
+
+        });
+
+        function handleMouseEnter() {
+            map.getCanvas().style.cursor = "pointer";
+        }
+
+        function handleMouseLeave() {
+            map.getCanvas().style.cursor = "";
+        }
+
+        // update the markers
+        map.on('render', () => {
+            if (!map.isSourceLoaded('leads')) return;
+            updateMarkers();
+        });
+
+        fetch('counties.pbf')
+        .then(res => res.arrayBuffer())
+        .then(pbfData => {
+            console.log(pbfData);
+            let geojson = geobuf.decode(new Pbf(pbfData));
+            map.getSource('counties').setData(geojson)
+        })
+        .catch(console.error);
+
+        fetch('states.pbf')
+        .then(res => res.arrayBuffer())
+        .then(pbfData => {
+            console.log(pbfData);
+            let geojson = geobuf.decode(new Pbf(pbfData));
+            map.getSource('states').setData(geojson);
+        })
+        .catch(console.error);
+
+    }); 
+
+    function updateStateFeatureOpacity(stateName) {
+        map.once('zoomend', () => {
+            map.setPaintProperty('states', 'fill-opacity', [
+                'match',
+                ['get', 'NAME_1'],
+                `${stateName}`,
+                0,
+                0.8
+            ]);
+
+            map.setPaintProperty('counties', 'fill-opacity', [
+                'match',
+                ['get', 'NAME_1'],
+                `${stateName}`,
+                0.6,
+                0
+            ]);
+
+            // filter the data for a given state
+            visualInstance.updateLeadsByState(stateName);
+        }); 
+    }
+
+    function highLightZipCode(code) {
+        map.setPaintProperty('zipcodes', 'fill-color', [
+            'match',
+            ['get', 'Name'],
+            `${code}`,
+            '#6DF3F5',
+            '#fff'
+        ]);
+
+
+        map.setPaintProperty('zipcodes', 'fill-opacity', [
+            'match',
+            ['get', 'Name'],
+            `${code}`,
+            0.6,
+            0.1
+        ]);
+
+    }
+
+    function fitToFeatureBounds(feature) {
+        let bbox = turf.bbox(feature.toJSON());
+        map.fitBounds(bbox, { padding:80 });
+    }
+
+    // tab toggler
+    let tabs = document.querySelectorAll(".visual-tab");
+    let activeTab = document.querySelector(".visual-tab.active");
+
+    tabs.forEach(tab => {
+        tab.onclick = (e) => {
+            let { id, dataset } = e.target;
+
+            if(activeTab == e.target) {
+                return;
+            }
+
+            activeTab.classList.remove('active');
+            activeTab = e.target;
+
+            // update the visual
+            visualInstance.setActiveId(dataset.id);
+            visualInstance.renderVisual();
+
+            // active state
+            activeTab.classList.add('active');
+        }
+    });
+
+    let Visuals = function(data) {
+        this.itemListingEl = document.getElementById("item-list");
+        this.data = data;
+        this.dataItems = [];
+        this.activeId = "DISTRESSED";
+
+        this.setData = (data) => {
+            this.data = data;
+            this.leads = [];
+            this.dataItems = data;
+
+            // render the defualt visual
+            setTimeout(() => {
+                this.renderVisual();
+            }, 100);
+        }
+
+        this.setCounty = (county) => {
+            this.county = county;
+            this.filterItemsByCounty();
+        }
+
+        this.setActiveId = (id) => {
+            this.activeId = id;
+        }
+
+        this.filterItemsByCounty = () => {
+            this.dataItems = this.data.filter(item => item.county == this.county);
+        }
+
+        this.updateLeads = (leads) => {
+            this.leads = leads;
+        }
+
+        this.renderVisual = () => {
+            // render visual by id
+            this.renderItemListing();
+            this.renderMarkers();
+        }
+
+        this.renderItemListing = () => {
+            this.itemListingEl.innerHTML = "";
+
+            let docFrag = document.createDocumentFragment();
+            this.leads.map(item => {
+                let props = item;
+
+                let contentEl = document.createElement("div");
+                contentEl.className = "item";
+                contentEl.id = `item-${props.zip}`;
+
+                let content = this.getListingContent(props);
+                contentEl.innerHTML = content;
+               
+                docFrag.append(contentEl);
+            });
+
+            this.itemListingEl.appendChild(docFrag);
+        }
+
+        this.getListingContent = (item) => {
+            let amountContent;
+
+            if(this.activeId == 'MED SALES PRICE') {
+                // convert the $260,500 to 250k
+                let val = this.formatAmount(item);
+
+                amountContent = `<span class="">$${val}k</span>`;
+            } else {
+                // console.log(item[this.activeId]);
+                let val = this.formatCount(item);
+                amountContent = `<span class="marker-inner">${val}</span>`;
+            }
+
+            let leadCost = item[this.activeId] * 0.20;
+
+            return `
+            <div class="visual-amount">
+                ${amountContent}
+            </div>
+    
+            <div class="visual-description">
+                <div class="code">${item.zip} - ${item.primary_city}</div>
+                <div class="address">
+                    ${item.area_codes.slice(0,3)} ${item.primary_city},  ${item.county} ${item.states_State}
+                </div>
+
+                <div class="price">
+                    <b>Price: </b> $${leadCost.toFixed(0)}
+                </div>
+
+                <a href="#" class="buy-btn">
+                    Buy Now
+                </a>
+            </div>
+    
+            <div class="favorites">
+                <i class="fa fa-heart"></i>
+            </div>`;
+
+
+            // <div class="address">
+            //     405 ${item.primary_city},  ${item.county} ${item.county}
+            // </div>
+            // <a href="#">Show more</a>
+            // <div class="code">${item.zip} - ${item.primary_city}</div>
+        }
+
+        this.handleHoverEvent = (e) => {
+            // zoom to that location
+        }
+
+        // render the marker
+        this.renderMarkers = () => {
+            if(this.markers) {
+                this.markers.forEach(marker => marker.remove())
+            }
+
+            // markers
+            this.markers = this.leads.map(item => {
+                return this.getMarker(item);
+            });
+        }
+
+        this.getMarker = (item) => {
+            // price marker
+            let el;
+            let priceMarker = document.createElement('div');
+            priceMarker.className = 'div-marker price-marker';
+
+            // count markers
+            let countMarker = document.createElement('div');
+            countMarker.className = 'div-marker count-marker';
+           
+
+            if(this.activeId == 'MED SALES PRICE') {
+                let val = this.formatAmount(item);
+
+                priceMarker.innerHTML = `<div class="marker-inner">$${val}k</div>`;
+                el = priceMarker;
+            } else {
+                let val = this.formatCount(item);
+                countMarker.innerHTML = `<div class="marker-inner">${val}</div>`;
+
+                el = countMarker;
+            }  
+            
+            // popup
+            let medianVal = this.formatAmount(item);
+            let popup = new mapboxgl.Popup()
+                .setHTML(`<div class="popup-content">
+                    <div class="visual-description">
+                        <div class="address">
+                            ${item.area_codes.slice(0,3)} ${item.primary_city},  ${item.county} ${item.states_State}
+                        </div>
+                        <div class="code">${item.zip} - ${item.primary_city}</div>
+                    </div>
+
+                    <div class="marker-inner"><b>Median Price: $${medianVal}k </b></div>
+                </div>`
+                )
+
+            // marker instance
+            let markerInst = new mapboxgl.Marker({element:el});
+
+            el.onmouseenter = () => { 
+                markerInst.togglePopup(); 
+
+                highLightZipCode(item.zip);
+            };
+            el.onmouseleave = () => { 
+                markerInst.togglePopup(); 
+                highLightZipCode(0)
+            };
+
+            markerInst
+                .setLngLat([parseFloat(item.lng), parseFloat(item.lat)])
+                .setPopup(popup)
+                .addTo(map);
+
+            return markerInst;
+        }
+
+        this.formatAmount = (item) => {
+            // convert the $260,500 to 250k
+            let val = item["MED SALES PRICE"];
+            val = val.split("$")[1].replace(",", "");
+            val = parseInt(val) ? val : "0";
+
+            val = val.slice(0, 3);
+            
+            return val;
+        }
+
+        this.formatCount = (item) => {
+            // convert the $260,500 to 250k
+            let value = item[this.activeId];
+
+            if(value > 1000) {
+                value = value/1000;
+                value = value.toFixed(1);
+
+                value = `${value}k`;
+            } 
+            
+            return value;
+        }
+
+        this.pntToGeojson = () => {
+            let fc = turf.featureCollection([]);
+
+            fc.features = this.data.map(item => {
+                let feature = {
+                    "type":"Feature",
+                    "geometry":{
+                        "type":"Point",
+                        "coordinates":[parseFloat(item.lng), parseFloat(item.lat)]
+                    },
+                    "properties":{...item}
+                }
+
+                return feature
+            });
+
+            return fc;
+        }
+
+
+        this.updateLeadsByState = (stateName) => {
+            let pnts = this.pntToGeojson();
+
+            pnts.features = pnts.features.filter(ft => ft.properties.states_State == stateName);
+            map.getSource('leads').setData(pnts);
+        }
+    }
+
+    let visualInstance = new Visuals();
+
+    // get unclustered markers 
+    const leads = {};
+    let leadsOnScreen = {};
+    let previousCenter = map.getCenter();
+    
+    function updateMarkers() {
+        let newCenter = map.getCenter();
+        if(previousCenter.toString() == newCenter.toString()) {
+            return;
+        }
+
+        console.log("Marker update");
+        previousCenter = map.getCenter();
+
+        const newLeads = {};
+        const features = map.querySourceFeatures('leads');
+        
+        // for every cluster on the screen, create an HTML marker for it (if we didn't yet),
+        // and add it to the map if it's not there already
+        for (const feature of features) {
+           
+            const coords = feature.geometry.coordinates;
+            const props = feature.properties;
+
+            if (props.cluster) continue;
+
+            
+
+            const id = props.zip;
+            let lead = leads[id];
+
+            if (!lead) {
+                lead = leads[id] = feature.properties;
+            }
+
+            newLeads[id] = lead;
+        
+            if (!leadsOnScreen[id]) { 
+                //marker.addTo(map);
+            }
+        }
+
+        // for every marker we've added previously, remove those that are no longer visible
+        for (const id in leadsOnScreen) {
+            if (!newLeads[id]) {
+                // leadsOnScreen[id].remove();
+            }
+        }
+
+        leadsOnScreen = newLeads;
+
+        // update the data items
+        visualInstance.updateLeads(
+            Object.values(leadsOnScreen) || []
+        );
+
+        // call the render method
+        visualInstance.renderVisual();
+    }
+
+    
+
+    // zipcode
+    // price: 20cents per lead.
+    // buy now button
+    // Amount Price -> Lead Count.
+
+
+    // Video: How the data benefits the user.
+    // Collapsible data
+    // drill in map: State -> County -> City
+    // Search zoom to city.
+    // tooltip: as a hover popup
+
+    // Remove homeowner, Median Sales Price
+</script>
+</body>
+</html>
