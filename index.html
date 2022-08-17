@@ -19,25 +19,28 @@
 <body>
     <div class="wrapper-container">
         <div class="map-container">
-            <div class="top-tab">
-                <div id="geocoder"></div>
-
+            <!-- <div class="top-tab">
                 <div class="tabs-right">
                     <div class="tab">VIEW ALL</div>
                     <div class="tab">FAVORITES</div>
                 </div>
-            </div>
+            </div> -->
 
-            <div id="map"></div>
+            <div id="map">
+                <!-- top right reset btn -->
+                <div class="refresh-btn" id="refresh-btn">
+                    <i class="fa fa-arrow-rotate-right"></i>
+                    Refresh
+                </div>
+            </div>
         </div>
 
         <div class="side-tab">
-            <div class="tab-header">
+            <!-- <div class="tab-header">
                 <div class="tab-title">Explore markets</div>
-            </div>
+            </div> -->
 
             <div class="visual-tabs">
-
                 <div class="visual-tab active" id="tab-1" data-id="DISTRESSED">
                     <span><i class="fa fa-eye-slash"></i></span>
                     <span class="tab-text">Distressed</span>
@@ -69,13 +72,68 @@
                 </div>
             </div>
 
+            <!-- Add the geocder  -->
             <div class="filter-section">
-                <div class="filter-input">
-                    <span>
-                        <i class="fa fa-filter"></i>
-                    </span>
-                    <input type="text" name="filter-by" id="filter-by" placeholder="Filter by neighborhood">    
+                <div id="geocoder"></div>
+            </div>
+
+            <div class="lead-info" id="lead-info">
+
+            </div>
+
+            <!-- dropdown sections -->
+            <div class="section-header">
+                <p>How to use this data</p>
+            </div>
+
+            <div class="div-section">
+                <div class="collapse">
+                    <div class="collapse-toggler">
+                        <div>Social Brand Awareness &  Trust Building</div>
+                        <div class="toggle-caret">
+                            <i class="fa fa-angle-down"></i>
+                            <i class="fa fa-angle-up"></i>
+                        </div>
+                    </div>
+                    <div class="collapse-section">
+                        <iframe width="100%" height="200" 
+                        src="https://www.youtube.com/embed/d8GBn2z9crI" title="SLOW JAMS 90' - Trey Songz, Jaime Foxx, Bryson Tiller & MORE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+                    </div>
+
+                    <div class="collapse-toggler">
+                        <div>Personalized Outreach & Passive Followup</div>
+                        <div class="toggle-caret">
+                            <i class="fa fa-angle-down"></i>
+                            <i class="fa fa-angle-up"></i>
+                        </div>
+                    </div>
+                    <div class="collapse-section">
+                        <video width="100%" height="200" controls>
+                            <source src="movie.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <div class="collapse-toggler">
+                        <div>Direct Sales for Hot Appointments</div> 
+                        <div class="toggle-caret">
+                            <i class="fa fa-angle-down"></i>
+                            <i class="fa fa-angle-up"></i>
+                        </div>
+                    </div>
+
+                    <div class="collapse-section">
+                        <video width="100%" height="200" controls>
+                            <source src="movie.mp4" type="video/mp4">
+                        </video>
+                    </div>
                 </div>
+            </div>
+
+
+            <!-- listing items -->
+            <div class="section-header">
+                <p>See more Lead data</p>
             </div>
 
             <div class="items-section">
@@ -86,8 +144,7 @@
                 </div>
 
                 <div class="items-list" id="item-list">
-                    <div class="item">
-
+                    <div class="item d-none">
                         <div class="visual-amount">
                             <span>262k</span>
                         </div>
@@ -127,17 +184,17 @@
 	mapboxgl.accessToken = 'pk.eyJ1IjoiZGF1ZGk5NyIsImEiOiJjanJtY3B1bjYwZ3F2NGFvOXZ1a29iMmp6In0.9ZdvuGInodgDk7cv-KlujA';
     const map = new mapboxgl.Map({
         container: 'map', 
-        // style: 'mapbox://styles/mapbox/light-v10',
         style: 'mapbox://styles/daudi97/cl6jb4rs900a314pd73vm6y3f',
-        center: {lng: -104.76085605124626, lat: 38.79115730659646}, 
-        zoom: 2.1
+        center: {lng: -98.40486166251202, lat: 39.13595229401548}, 
+        zoom:3.25
     });
 
     // geocoder:
     const geocoder = new MapboxGeocoder({
         accessToken: mapboxgl.accessToken,
         types: 'country,region,place,postcode,locality,neighborhood',
-        placeholder:'Search for city...'
+        placeholder:'Search by city or Zip...',
+        countries:'us'
     });
     
     geocoder.addTo('#geocoder');
@@ -145,16 +202,13 @@
     geocoder.on('result', function({result}) {
         map.flyTo({
             center:result.center, 
-            zoom:9
+            zoom:11
         });
-
-        // map.fitBounds(result.bbox, { padding:80 });
 
         // get the state;
         let stateName;
-
-        result.content.forEach(ctx => {
-            if(cts.id.includes('region')) {
+        result.context.forEach(ctx => {
+            if(ctx.id.includes('region')) {
                 stateName = ctx.text;
             }
         });
@@ -284,36 +338,6 @@
             }
         });
 
-
-        // // colorado zip codes
-        // map.addSource('zipcodes', {
-        //     type:'geojson',
-        //     data:'colorado_zips.geojson'
-        // });
-
-        // map.addLayer({
-        //     id:'zipcodes',
-        //     source:'zipcodes',
-        //     minzoom:8,
-        //     type:'fill',
-        //     paint:{
-        //         'fill-color':'#fff',
-        //         'fill-opacity':0.1,
-        //         'fill-outline-color':'#9421FA'
-        //     }
-        // });
-
-        // map.addLayer({
-        //     id:'zipcodes-line',
-        //     source:'zipcodes',
-        //     minzoom:8,
-        //     type:'line',
-        //     paint:{
-        //         'line-width':0.8,
-        //         'line-color':'#9421FA'
-        //     }
-        // });
-
         // click event on states
         map.on('click', 'states', function(e) {
             let feature = e.features[0];        
@@ -333,6 +357,23 @@
         // county click
         map.on('mouseenter', 'counties', handleMouseEnter);
         map.on('mouseleave', 'counties', handleMouseLeave);
+
+
+        // hightlight zipcodes on hover
+        map.on('mousemove', 'zipcodes', (e) => {
+            handleMouseEnter();
+            let feature = e.features[0];
+
+            // get the code
+            let code = feature.properties.Name;
+
+            highLightZipCode(code);
+        });
+
+        map.on('mouseleave', 'zipcodes', (e) => {
+            highLightZipCode(0);
+            handleMouseLeave();
+        });
 
         map.on('click', 'counties', function(e) {
             let zoom = map.getZoom();
@@ -398,7 +439,7 @@
                 'match',
                 ['get', 'NAME_1'],
                 `${stateName}`,
-                0.6,
+                0.2,
                 0
             ]);
 
@@ -412,7 +453,8 @@
             'match',
             ['get', 'Name'],
             `${code}`,
-            '#6DF3F5',
+            // '#6DF3F5',
+            '#9421fa',
             '#fff'
         ]);
 
@@ -537,9 +579,9 @@
                 ${amountContent}
             </div>
     
-            <div class="visual-description">
+            <div class="visual-description ">
                 <div class="code">${item.zip} - ${item.primary_city}</div>
-                <div class="address">
+                <div class=" d-none">
                     ${item.area_codes.slice(0,3)} ${item.primary_city},  ${item.county} ${item.states_State}
                 </div>
 
@@ -547,7 +589,7 @@
                     <b>Price: </b> $${leadCost.toFixed(0)}
                 </div>
 
-                <a href="#" class="buy-btn">
+                <a href="#" class="buy-btn d-none">
                     Buy Now
                 </a>
             </div>
@@ -555,13 +597,6 @@
             <div class="favorites">
                 <i class="fa fa-heart"></i>
             </div>`;
-
-
-            // <div class="address">
-            //     405 ${item.primary_city},  ${item.county} ${item.county}
-            // </div>
-            // <a href="#">Show more</a>
-            // <div class="code">${item.zip} - ${item.primary_city}</div>
         }
 
         this.handleHoverEvent = (e) => {
@@ -620,15 +655,18 @@
 
             // marker instance
             let markerInst = new mapboxgl.Marker({element:el});
+            
+            el.onclick = () => {
+                // update the side tab section
+                this.updateSideSection(item);
+            };
 
             el.onmouseenter = () => { 
                 markerInst.togglePopup(); 
-
-                highLightZipCode(item.zip);
             };
+
             el.onmouseleave = () => { 
                 markerInst.togglePopup(); 
-                highLightZipCode(0)
             };
 
             markerInst
@@ -637,6 +675,18 @@
                 .addTo(map);
 
             return markerInst;
+        }
+
+        this.updateSideSection = (item) => {
+            let element = document.getElementById("lead-info");
+            let leadCost = item[this.activeId] * 0.20;
+
+            element.innerHTML = `<div>
+                <div class="code">${item.zip} - ${item.primary_city}</div>
+                <div class="price">
+                    <b>Price: </b> $${leadCost.toFixed(0)}
+                </div>
+            </div>`;
         }
 
         this.formatAmount = (item) => {
@@ -754,21 +804,66 @@
         visualInstance.renderVisual();
     }
 
+    // refresh btn
+    document.getElementById('refresh-btn').onclick = (e) => {
+        e.stopPropagation();
+
+        // reset states opacity
+        map.setPaintProperty('states', 'fill-opacity', 0.8);
+
+        map.flyTo({
+            center: {lng: -98.40486166251202, lat: 39.13595229401548}, 
+            zoom:3.25
+        });
+
+        document.getElementById('lead-info').innerHTML = "";
+
+    }
+
+    // collapse module
+    let Collapse = function() {
+        this.activeCollapse = null;
+        this.activeToggler = null;
+        this.collapseTogglers = document.querySelectorAll(".collapse-toggler");
+
+        this.fireListeners = () => {
+            for (i = 0; i < this.collapseTogglers.length; i++) {
+                let toggler = this.collapseTogglers[i];
+                toggler.addEventListener("click", () => {
+                    this.toggleCollapse(toggler);
+                });
+            }
+        }
+
+        this.toggleCollapse = (toggler) => {
+            toggler.classList.toggle("active");
+            var content = toggler.nextElementSibling;
+
+            if(this.activeCollapse && this.activeCollapse == content) {
+                this.activeCollapse.style.maxHeight = 0;
+            }
+            else {
+                this.activeCollapse ? this.activeCollapse.style.maxHeight = 0 : "";
+                content.style.maxHeight = content.scrollHeight + "px";
+
+                this.setActiveCollapse(content);
+                this.activeToggler ? this.activeToggler.classList.remove('active') : "";
+                this.activeToggler = toggler;
+            }
+            
+        }
+
+        this.setActiveCollapse = (element) => {
+            this.activeCollapse = element;
+        }
+    }
     
-
-    // zipcode
-    // price: 20cents per lead.
-    // buy now button
-    // Amount Price -> Lead Count.
-
+    let collapseInstance = new Collapse();
+    collapseInstance.fireListeners();
 
     // Video: How the data benefits the user.
     // Collapsible data
-    // drill in map: State -> County -> City
-    // Search zoom to city.
-    // tooltip: as a hover popup
-
-    // Remove homeowner, Median Sales Price
+    // On geocode: Bug, does not display the points initially, no filtering: Missing State/Regions
 </script>
 </body>
 </html>
