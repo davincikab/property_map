@@ -36,14 +36,15 @@
         </div>
 
         <div class="side-tab">
-            <!-- <div class="tab-header">
-                <div class="tab-title">Explore markets</div>
-            </div> -->
+            <!-- Add the geocder  -->
+            <div class="filter-section">
+                <div id="geocoder"></div>
+            </div>
 
             <div class="visual-tabs">
-                <div class="visual-tab active" id="tab-1" data-id="DISTRESSED">
-                    <span><i class="fa fa-eye-slash"></i></span>
-                    <span class="tab-text">Distressed</span>
+                <div class="visual-tab active" id="tab-1" data-id="Absentee Owners">
+                    <span><i class="fa fa-credit-card"></i></span>
+                    <span class="tab-text">Absentee Owners</span>
                 </div>
 
                 <div class="visual-tab" id="tab-1" data-id="LIKELY TO SELL">
@@ -61,10 +62,10 @@
                     <span class="tab-text">Divorced</span>
                 </div>
 
-                <div class="visual-tab" id="tab-1" data-id="Absentee Owners">
-                    <span><i class="fa fa-credit-card"></i></span>
-                    <span class="tab-text">Absentee Owners</span>
-                </div>
+                <div class="visual-tab" id="tab-1" data-id="DISTRESSED">
+                    <span><i class="fa fa-eye-slash"></i></span>
+                    <span class="tab-text">Distressed</span>
+                </div>                
 
                 <div class="visual-tab" id="tab-1" data-id="DOWNSIZE">
                     <span><i class="fa fa-credit-card"></i></span>
@@ -72,14 +73,7 @@
                 </div>
             </div>
 
-            <!-- Add the geocder  -->
-            <div class="filter-section">
-                <div id="geocoder"></div>
-            </div>
-
-            <div class="lead-info" id="lead-info">
-
-            </div>
+            <div class="lead-info" id="lead-info"></div>
 
             <!-- dropdown sections -->
             <div class="section-header">
@@ -88,7 +82,7 @@
 
             <div class="div-section">
                 <div class="collapse">
-                    <div class="collapse-toggler">
+                    <div class="collapse-toggler" data-id="1">
                         <div>Social Brand Awareness &  Trust Building</div>
                         <div class="toggle-caret">
                             <i class="fa fa-angle-down"></i>
@@ -96,12 +90,20 @@
                         </div>
                     </div>
                     <div class="collapse-section">
-                        <iframe width="100%" height="200" 
-                        src="https://www.youtube.com/embed/d8GBn2z9crI" title="SLOW JAMS 90' - Trey Songz, Jaime Foxx, Bryson Tiller & MORE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe 
+                            width="100%" 
+                            height="200" 
+                            src="https://www.youtube.com/embed/d8GBn2z9crI" 
+                            title="SLOW JAMS 90' - Trey Songz, Jaime Foxx, Bryson Tiller & MORE" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            id="iframe-1"
+                        ></iframe>
 
                     </div>
 
-                    <div class="collapse-toggler">
+                    <div class="collapse-toggler"data-id="2">
                         <div>Personalized Outreach & Passive Followup</div>
                         <div class="toggle-caret">
                             <i class="fa fa-angle-down"></i>
@@ -109,12 +111,18 @@
                         </div>
                     </div>
                     <div class="collapse-section">
-                        <video width="100%" height="200" controls>
-                            <source src="movie.mp4" type="video/mp4">
-                        </video>
+                        <iframe 
+                            width="100%" 
+                            height="200" 
+                            src="https://www.youtube.com/embed/MN7yfV4UuCI" 
+                            title="How To Build A Business That Works | Brian Tracy #GENIUS" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                        ></iframe>
                     </div>
 
-                    <div class="collapse-toggler">
+                    <div class="collapse-toggler" data-id="3">
                         <div>Direct Sales for Hot Appointments</div> 
                         <div class="toggle-caret">
                             <i class="fa fa-angle-down"></i>
@@ -123,59 +131,31 @@
                     </div>
 
                     <div class="collapse-section">
-                        <video width="100%" height="200" controls>
-                            <source src="movie.mp4" type="video/mp4">
-                        </video>
+                        <iframe 
+                            width="100%" 
+                            height="200" 
+                            src="https://www.youtube.com/embed/RzcB3idwXEQ" 
+                            title="MY FOREX TRADING JOURNEY - KES 100,000 WITHDRAW | KENYAN FOREX TRADER" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            id="iframe-3"
+                        >
+                        </iframe>
                     </div>
                 </div>
             </div>
 
 
             <!-- listing items -->
-            <div class="section-header">
-                <p>See more Lead data</p>
-            </div>
-
             <div class="items-section">
-                <div class="items-header">
+                <!-- <div class="items-header">
                     <div class="column-name">Lead Count</div>
                     <div class="column-name info">Market</div>
                     <div class="column-name">Add</div>
-                </div>
+                </div> -->
 
-                <div class="items-list" id="item-list">
-                    <div class="item d-none">
-                        <div class="visual-amount">
-                            <span>262k</span>
-                        </div>
-    
-                        <div class="visual-description">
-                            <div class="code">74873 - Tecumseh</div>
-
-                            <div class="address d-none">
-                                405 Tecumseh,  Pottawatomie County OK
-                            </div>
-
-                            <div class="price">
-                                <b>Price: </b>$500
-                            </div>
-
-                            <a href="" class="buy-btn">
-                                Buy Now
-                            </a>
-
-                            <!-- // zipcode
-                            // price: 20cents per lead.
-                            // buy now button
-                            // Amount Price -> Lead Count. -->
-                        </div>
-    
-                        <div class="favorites">
-                            <i class="fa fa-heart"></i>
-                        </div>
-    
-                    </div>
-                </div>
+                <div class="items-list d-none" id="item-list"></div>
             </div>
             
         </div>
@@ -498,11 +478,12 @@
         }
     });
 
+    // visual togglers
     let Visuals = function(data) {
         this.itemListingEl = document.getElementById("item-list");
         this.data = data;
         this.dataItems = [];
-        this.activeId = "DISTRESSED";
+        this.activeId = "Absentee Owners";
 
         this.setData = (data) => {
             this.data = data;
@@ -534,7 +515,7 @@
 
         this.renderVisual = () => {
             // render visual by id
-            this.renderItemListing();
+            // this.renderItemListing();
             this.renderMarkers();
         }
 
@@ -684,7 +665,7 @@
             element.innerHTML = `<div>
                 <div class="code">${item.zip} - ${item.primary_city}</div>
                 <div class="price">
-                    <b>Price: </b> $${leadCost.toFixed(0)}
+                    <b>Available Leads: </b> ${item[this.activeId]}
                 </div>
             </div>`;
         }
@@ -836,20 +817,27 @@
         }
 
         this.toggleCollapse = (toggler) => {
-            toggler.classList.toggle("active");
             var content = toggler.nextElementSibling;
 
-            if(this.activeCollapse && this.activeCollapse == content) {
+            if(this.activeCollapse == content) {
                 this.activeCollapse.style.maxHeight = 0;
-            }
-            else {
-                this.activeCollapse ? this.activeCollapse.style.maxHeight = 0 : "";
-                content.style.maxHeight = content.scrollHeight + "px";
+                toggler.classList.remove("active");
 
-                this.setActiveCollapse(content);
-                this.activeToggler ? this.activeToggler.classList.remove('active') : "";
-                this.activeToggler = toggler;
+                this.setActiveCollapse(null);
+                return;
             }
+
+            toggler.classList.add("active");
+
+            this.activeCollapse ? this.activeCollapse.style.maxHeight = 0 : "";
+            content.style.maxHeight = content.scrollHeight + "px";
+
+            this.setActiveCollapse(content);
+            this.activeToggler ? this.activeToggler.classList.remove('active') : "";
+            this.activeToggler = toggler;
+
+            let id = toggler.dataset.id
+            // autoFullScreen(`iframe-${id}`);
             
         }
 
@@ -860,6 +848,28 @@
     
     let collapseInstance = new Collapse();
     collapseInstance.fireListeners();
+
+
+    // video auto fullscreen
+    function autoFullScreen(iframeId) {
+        let iframe = document.getElementById(iframeId);
+        let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        
+        console.log(iframeDoc);
+
+        let button = iframeDoc.querySelector(".ytp-button.ytp-large-play-button");
+        console.log(button);
+
+        button.onclick = function(e) {
+            let video = iframeDoc.querySelector("video");
+
+            console.log(video);
+            video.requestFullscreen()
+            .then(() => {
+                console.log("fullscreen");
+            });
+        }
+    }
 
     // Video: How the data benefits the user.
     // Collapsible data
