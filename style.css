@@ -334,7 +334,7 @@ input:focus-visible {
 /* geocoder */
 .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
     background-color: transparent;
-    border: 1px solid var(--light);
+    border: 2px solid #999;;
 }
 .mapboxgl-ctrl-geocoder.mapboxgl-ctrl input {
     color:var(--white) !important; 
