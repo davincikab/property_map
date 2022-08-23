@@ -180,6 +180,8 @@
     geocoder.addTo('#geocoder');
 
     geocoder.on('result', function({result}) {
+        console.log(result);
+
         map.flyTo({
             center:result.center, 
             zoom:11
@@ -197,15 +199,30 @@
             updateStateFeatureOpacity(stateName);
             updateMarkers();
         }
+
+        if(result.place_type[0] == 'postcode') {
+            // do update the 
+            let item = visualInstance.data.find(dt => dt.zipcode == result.text);
+
+            // update the lead info
+            item ? visualInstance.updateSideSection(item) : "";
+
+            // select the zipcode regions
+            highLightZipCode(result.text);
+
+            // toggle marker popup
+            visualInstance.setActiveZipCode(result.text);
+        }
+
     });
 
     // handle results
     map.on('load', function(e) {
         d3.csv('master_counts.csv')
-            .then(data => {
-                visualInstance.setData(data);                
-            })
-            .catch(console.error);
+        .then(data => {
+            visualInstance.setData(data);                
+        })
+        .catch(console.error);
         
         // point data
         map.addSource('leads', {
@@ -260,61 +277,6 @@
                 'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
                 'text-size': 12,
                 // visibility:'none'
-            }
-        });
- 
-
-        // county layer
-        map.addSource('counties', {
-            type:'geojson',
-            data:{"type":"FeatureCollection", "features":[]}
-        });
-
-        map.addLayer({
-            id:'counties',
-            source:'counties',
-            minzoom:4,
-            maxzoom:8.5,
-            type:'fill',
-            paint:{
-                'fill-color':'#6CF4F6',
-                'fill-opacity':0,
-            }
-        });
-
-        // usa states layer
-        map.addSource('states', {
-            type:'geojson',
-            data:{"type":"FeatureCollection", "features":[]}
-        });
-
-        map.addLayer({
-            id:'states',
-            source:'states',
-            maxzoom:7,
-            type:'fill',
-            paint:{
-                'fill-color':'#fff',
-                'fill-opacity':0.8,
-            }
-        });
-
-        map.addLayer({
-            id:'states-line',
-            source:'states',
-            type:'line',
-            maxzoom:7,
-            paint:{
-                'line-color':'#fff',
-                'line-width':[
-                    'interpolate',
-                    ['linear'],
-                    ['zoom'],
-                    2,
-                    1.2,
-                    22,
-                    5
-                ],
             }
         });
 
@@ -385,24 +347,6 @@
             updateMarkers();
         });
 
-        fetch('counties.pbf')
-        .then(res => res.arrayBuffer())
-        .then(pbfData => {
-            console.log(pbfData);
-            let geojson = geobuf.decode(new Pbf(pbfData));
-            map.getSource('counties').setData(geojson)
-        })
-        .catch(console.error);
-
-        fetch('states.pbf')
-        .then(res => res.arrayBuffer())
-        .then(pbfData => {
-            console.log(pbfData);
-            let geojson = geobuf.decode(new Pbf(pbfData));
-            map.getSource('states').setData(geojson);
-        })
-        .catch(console.error);
-
     }); 
 
     function updateStateFeatureOpacity(stateName) {
@@ -426,6 +370,8 @@
             // filter the data for a given state
             visualInstance.updateLeadsByState(stateName);
         }); 
+
+        visualInstance.setActiveZipCode(null);
     }
 
     function highLightZipCode(code) {
@@ -483,6 +429,7 @@
         this.itemListingEl = document.getElementById("item-list");
         this.data = data;
         this.dataItems = [];
+        this.activeZip;
         this.activeId = "Absentee Owners";
 
         this.setData = (data) => {
@@ -499,6 +446,10 @@
         this.setCounty = (county) => {
             this.county = county;
             this.filterItemsByCounty();
+        }
+
+        this.setActiveZipCode = (zipcode) => {
+            this.activeZip = zipcode;
         }
 
         this.setActiveId = (id) => {
@@ -636,7 +587,8 @@
 
             // marker instance
             let markerInst = new mapboxgl.Marker({element:el});
-            
+            markerInst.zipcode = item.zipcode;
+
             el.onclick = () => {
                 // update the side tab section
                 this.updateSideSection(item);
@@ -654,6 +606,11 @@
                 .setLngLat([parseFloat(item.lng), parseFloat(item.lat)])
                 .setPopup(popup)
                 .addTo(map);
+
+            // marker instance
+            if(this.activeZip == item.zipcode) {
+                markerInst.togglePopup();
+            }
 
             return markerInst;
         }

@@ -267,7 +267,7 @@ input:focus-visible {
     align-items: center;
     color: var(--light1);
 
-    max-height: 320px;
+    max-height: calc(100vh - 300px);
     overflow-y: auto;
 }
 
@@ -328,7 +328,7 @@ input:focus-visible {
     font-size: 1.25rem;
     color:var(--light);
     background-color: #323232;
-    text-align: left;
+    text-align: center;
     padding:0.25rem;
 }
 /* geocoder */
