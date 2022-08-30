@@ -15,6 +15,10 @@
     <script src="https://unpkg.com/pbf@3.0.5/dist/pbf.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="wrapper-container">
@@ -27,68 +31,89 @@
             </div> -->
 
             <div id="map">
-                <!-- top right reset btn -->
-                <div class="refresh-btn" id="refresh-btn">
-                    <i class="fa fa-arrow-rotate-right"></i>
-                    Refresh
+
+                <div class="tab-toggler" id="tab-toggler">
+                    <span>
+                        <i class="fa fa-play"></i>
+                    </span>
+
+                    <div>How to use</div>
                 </div>
+
+                <div class="top-section">
+                    <!-- Add the geocoder  -->
+                    <div class="filter-section">
+                        <div id="geocoder"></div>
+                    </div>
+
+                     <!-- top right reset btn -->
+                    <div class="refresh-btn" id="refresh-btn">
+                        <i class="fa fa-arrow-rotate-right"></i>
+                        Refresh
+                    </div>
+
+                </div>
+
+                <div class="visual-tabs">
+                    <div class="visual-tab active" id="tab-1" data-id="Absentee Owners">
+                        <!-- <span><i class="fa fa-credit-card"></i></span> -->
+                        <span class="tab-text">Absentee Owners</span>
+                    </div>
+    
+                    <div class="visual-tab" id="tab-1" data-id="LIKELY TO SELL">
+                        <!-- <span><i class="fa fa-dollar-sign"></i></span> -->
+                        <span class="tab-text">Likely to Sell</span>
+                    </div>
+    
+                    <div class="visual-tab" id="tab-1" data-id="BAD CREDIT">
+                        <!-- <span><i class="fa fa-credit-card"></i></span> -->
+                        <span class="tab-text">Bad Credit</span>
+                    </div>
+    
+                    <div class="visual-tab" id="tab-1" data-id="DIVORCED">
+                        <!-- <span><i class="fa fa-credit-card"></i></span> -->
+                        <span class="tab-text">Divorced</span>
+                    </div>
+    
+                    <div class="visual-tab" id="tab-1" data-id="DISTRESSED">
+                        <!-- <span><i class="fa fa-eye-slash"></i></span> -->
+                        <span class="tab-text">Distressed</span>
+                    </div>                
+    
+                    <div class="visual-tab" id="tab-1" data-id="DOWNSIZE">
+                        <!-- <span><i class="fa fa-credit-card"></i></span> -->
+                        <span class="tab-text">Downsize</span>
+                    </div>
+                </div>
+
+               
             </div>
         </div>
 
         <div class="side-tab">
-            <!-- Add the geocder  -->
-            <div class="filter-section">
-                <div id="geocoder"></div>
-            </div>
-
-            <div class="visual-tabs">
-                <div class="visual-tab active" id="tab-1" data-id="Absentee Owners">
-                    <span><i class="fa fa-credit-card"></i></span>
-                    <span class="tab-text">Absentee Owners</span>
-                </div>
-
-                <div class="visual-tab" id="tab-1" data-id="LIKELY TO SELL">
-                    <span><i class="fa fa-dollar-sign"></i></span>
-                    <span class="tab-text">Likely to Sell</span>
-                </div>
-
-                <div class="visual-tab" id="tab-1" data-id="BAD CREDIT">
-                    <span><i class="fa fa-credit-card"></i></span>
-                    <span class="tab-text">Bad Credit</span>
-                </div>
-
-                <div class="visual-tab" id="tab-1" data-id="DIVORCED">
-                    <span><i class="fa fa-credit-card"></i></span>
-                    <span class="tab-text">Divorced</span>
-                </div>
-
-                <div class="visual-tab" id="tab-1" data-id="DISTRESSED">
-                    <span><i class="fa fa-eye-slash"></i></span>
-                    <span class="tab-text">Distressed</span>
-                </div>                
-
-                <div class="visual-tab" id="tab-1" data-id="DOWNSIZE">
-                    <span><i class="fa fa-credit-card"></i></span>
-                    <span class="tab-text">Downsize</span>
-                </div>
-            </div>
-
-            <div class="lead-info" id="lead-info"></div>
+            <div class="lead-info d-none" id="lead-info"></div>
 
             <!-- dropdown sections -->
             <div class="section-header">
                 <p>How to use this data</p>
+
+                <div class="close-side-tab" id="close-side-tab">
+                    <span>
+                        <i class="fa fa-times"></i>
+                    </span>
+                </div>
             </div>
 
             <div class="div-section">
                 <div class="collapse">
                     <div class="collapse-toggler" data-id="1">
-                        <div>Social Brand Awareness &  Trust Building</div>
                         <div class="toggle-caret">
-                            <i class="fa fa-angle-down"></i>
+                            <i class="fa fa-play"></i>
                             <i class="fa fa-angle-up"></i>
                         </div>
+                        <div>Social Brand Awareness &  Trust Building</div>
                     </div>
+
                     <div class="collapse-section">
                         <iframe 
                             width="100%" 
@@ -105,11 +130,11 @@
                     </div>
 
                     <div class="collapse-toggler"data-id="2">
-                        <div>Personalized Outreach & Passive Followup</div>
                         <div class="toggle-caret">
-                            <i class="fa fa-angle-down"></i>
+                            <i class="fa fa-play"></i>
                             <i class="fa fa-angle-up"></i>
                         </div>
+                        <div>Personalized Outreach & Passive Followup</div>
                     </div>
                     <div class="collapse-section">
                         <iframe 
@@ -126,11 +151,12 @@
                     </div>
 
                     <div class="collapse-toggler" data-id="3">
-                        <div>Direct Sales for Hot Appointments</div> 
                         <div class="toggle-caret">
-                            <i class="fa fa-angle-down"></i>
+                            <i class="fa fa-play"></i>
                             <i class="fa fa-angle-up"></i>
                         </div>
+
+                        <div>Direct Sales for Hot Appointments</div> 
                     </div>
 
                     <div class="collapse-section">
@@ -832,6 +858,24 @@
             });
         }
     }
+
+    // toggle sidetab
+    let sideTab = document.querySelector(".side-tab");
+    document.getElementById("tab-toggler").onclick = (e) => {
+        e.stopPropagation();
+        sideTab.classList.add("active");;
+    }
+
+    document.getElementById("close-side-tab").onclick = (e) => {
+        e.stopPropagation();
+        sideTab.classList.remove("active");
+    }
+
+    
+
+    
+    
+
 
     // Video: How the data benefits the user.
     // Collapsible data
