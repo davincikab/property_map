@@ -657,6 +657,10 @@ input:focus-visible {
     font-family: 'Poppins', sans-serif !important; 
 }
 
+
+.mapboxgl-ctrl-geocoder--button {
+    background: #4b4b4c00 !important;
+}
 .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
     background-color: #4B4B4C;
     /* border: 2px solid #999; */
@@ -810,7 +814,7 @@ div.btn > * {
         right: 3vw;
         margin: 0.5rem;
         border-width: 1.8px;
-        height: 45px;
+        height: 52px;
     }
 
     .visual-tabs {
@@ -829,7 +833,7 @@ div.btn > * {
 
     .visual-tabs .visual-toggler {
         display: block;
-        height: 45px;
+        height: 40px;
         width: 94%;
 
 
@@ -839,6 +843,10 @@ div.btn > * {
         margin: 0;
         border: none;
         background-color: #6D2FA1;
+        border-radius: 0;
+    }
+
+    .visual-tabs.active .visual-toggler {
         border-bottom: 1px solid #6CF4F6;
     }
 
@@ -858,7 +866,7 @@ div.btn > * {
         height: 35px;
         border: 1px solid #6CF4F6;
         display: none;
-        margin:0.5rem 0 0 0;
+        margin:1rem 0 0 0;
 
         background-color: #6D2FA1;
     }
@@ -901,5 +909,9 @@ div.btn > * {
     /* video */
     .video .section-title {
         margin-top: 10vh;
+    }
+
+    .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
+        height: 55px;
     }
 }
