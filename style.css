@@ -141,7 +141,11 @@ body {
     border-radius: 5px;
 }
 
-.visual-tabs .visual-toggler {
+.visual-tabs .visual-tab-list {
+    display: flex;
+}
+
+.visual-toggler {
     display: none;
     flex-direction: row;
     justify-content: space-evenly;
@@ -802,7 +806,7 @@ div.btn > * {
     }
 
     .top-section {
-        width: 90vw;
+        width: 93vw;
     }
 
     .top-section .filter-section {
@@ -810,73 +814,71 @@ div.btn > * {
     }
 
     .tab-toggler {
-        top: 70px;
+        top: 80px;
         right: 3vw;
-        margin: 0.5rem;
+        margin: 0 0.5rem;
         border-width: 1.8px;
         height: 52px;
     }
 
     .visual-tabs {
-        flex-direction: column;
         background-color: var(--dark);
         padding: 10px;
-        top: 78px;
-        width: 160px;
+        top: 148px;
+        max-width: 90%;
         margin: 0 0 0 0.75rem;
-        background-color:  #6D28AA;
-        /* overflow-y: hidden; */
-
-        /* height: 60px; */
-        /* max-height: 60px; */
+        background-color:  transparent;
+        overflow-x: auto;
+        display: none;
     }
 
-    .visual-tabs .visual-toggler {
+    .visual-tabs.active {
+        display: flex;
+    }
+
+    .visual-tabs .visual-tab-list {
+        display: flex;
+    }
+
+    .visual-toggler {
+        position: absolute;
+        top: 80px;
+        left:0.75rem;
+        z-index: 2;
         display: block;
-        height: 40px;
-        width: 94%;
+        height: 50px;
+        width: 44%;
 
 
         display: flex;
         align-items: center;
+        justify-content: space-around;
+        flex-direction: row;
+
+        color: var(--white);
         font-size: 1rem;
         margin: 0;
         border: none;
+        border-radius: 6px;
         background-color: #6D2FA1;
-        border-radius: 0;
-    }
-
-    .visual-tabs.active .visual-toggler {
-        border-bottom: 1px solid #6CF4F6;
     }
 
     .visual-toggler > * {
         pointer-events: none;
     }
 
-    .visual-tab.active {
+    .visual-tabs .visual-tab.active {
         max-height:320px;
-        color:#181A1C;
+        height: 48.6px;
     }
 
     .visual-tabs .visual-tab {
-        border: 0px;
-        border-radius: 20px;
-        width: 94%;
-        height: 35px;
-        border: 1px solid #6CF4F6;
-        display: none;
-        margin:1rem 0 0 0;
-
-        background-color: #6D2FA1;
+        height: 45px;
+        width: 150px !important;
     }
 
     .visual-tabs.active .visual-tab {
         display: flex;
-    }
-
-    .visual-tab.active {
-        background-color: #6CF4F6;
     }
 
     .visual-tab .tab-text {
@@ -914,4 +916,15 @@ div.btn > * {
     .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
         height: 55px;
     }
+}
+
+
+/* disable scrollbar */
+.visual-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.visual-tabs {
+    -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
