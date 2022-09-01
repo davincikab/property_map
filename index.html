@@ -31,13 +31,20 @@
             </div> -->
 
             <div id="map">
+                <div class="logo-container">
+                    <img src="logo.png" alt="">
+                    <div class="">
+                        <div class="title">HIGHIQ</div>
+                        <div class="logo-caption">Track your leads</div>
+                    </div>
+                </div>
 
                 <div class="tab-toggler" id="tab-toggler">
-                    <span>
-                        <i class="fa fa-play"></i>
-                    </span>
+                    <div>Lead Hopper</div>
 
-                    <div>How to use</div>
+                    <span>
+                        <i class="fa fa-angle-right"></i>
+                    </span>
                 </div>
 
                 <div class="top-section">
@@ -49,12 +56,17 @@
                      <!-- top right reset btn -->
                     <div class="refresh-btn" id="refresh-btn">
                         <i class="fa fa-arrow-rotate-right"></i>
-                        Refresh
+                        <div>Refresh</div>
                     </div>
 
                 </div>
 
                 <div class="visual-tabs">
+                    <div class="visual-toggler" id="dropdown-toggler">
+                        <span class="tab-text">Lead Type</span>
+                        <span><i class="fa fa-angle-down"></i></span>
+                    </div>
+
                     <div class="visual-tab active" id="tab-1" data-id="Absentee Owners">
                         <!-- <span><i class="fa fa-credit-card"></i></span> -->
                         <span class="tab-text">Absentee Owners</span>
@@ -95,16 +107,148 @@
 
             <!-- dropdown sections -->
             <div class="section-header">
-                <p>How to use this data</p>
+                <div>
+                    <img src="logo.png" alt="" height="80px" width="80px">
+                </div>
 
-                <div class="close-side-tab" id="close-side-tab">
+                <div class="close-btn close-side-tab" id="close-side-tab">
                     <span>
                         <i class="fa fa-times"></i>
                     </span>
                 </div>
             </div>
 
-            <div class="div-section">
+            <div class="section-zips">
+                <div class="next-step" id="next-btn">
+                    <div>
+                        <div>NEXT STEP</div>
+                        <span class="">(Choose Campaign)</span>
+                    </div>
+
+                    <span>
+                        <i class="fa fa-angle-right"></i>
+                    </span>
+                </div>
+
+                <div class="zip-section">
+                    <div class="zip-count" id="lead-count">
+                    </div>
+
+                    <div class="zip-list" id="zip-list">
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="campaign-section d-none">
+                <div class="section-title">
+                    Choose Campaign
+                </div>
+
+                <div class="campaign-toggler" data-id="1" data-text="Video Brand Campaign">
+                    <div class="icon">
+                        <div class="toggle-caret">
+                            <i class="fa fa-play"></i>
+                            <!-- <i class="fa fa-angle-up"></i> -->
+                        </div>
+
+                        <span>
+                            <i class="fa fa-bullhorn"></i>
+                        </span>
+                    </div>
+                    
+                    <div>Launch Video Brand Campaign</div>
+                </div>
+
+                <div class="campaign-toggler" data-id="2" data-text="Text Message Campaign">
+                    <div class="icon">
+                        <div class="toggle-caret">
+                            <i class="fa fa-bars"></i>
+                            <!-- style="transform: rotate(90deg);" -->
+                            <!-- <i class="fa fa-angle-up"></i> -->
+                        </div>
+
+                        <span>
+                            <i class="fa fa-bullhorn"></i>
+                        </span>
+                    </div>
+                    
+                    <div>Launch Text Message Campaign</div>
+                </div>
+
+                <div class="campaign-toggler" data-id="3" data-text="Call Campaign / Appt Setting">
+                    <div class="icon">
+                        <div class="toggle-caret">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <span>
+                            <i class="fa fa-bullhorn"></i>
+                        </span>
+                    </div>
+                    
+                    <div> Launch Call Campaign / Appt Setting</div>
+                </div>
+            </div>
+
+            <div class="video d-none">
+                <div class="close-btn" id="close-video">
+                    <span>
+                        <i class="fa fa-times"></i>
+                    </span>
+                </div>
+
+                <div class="section-title">How it works </div>
+                <div class="video-info">
+                    <iframe 
+                        width="60%" 
+                        height="200" 
+                        src="https://www.youtube.com/embed/d8GBn2z9crI" 
+                        title="SLOW JAMS 90' - Trey Songz, Jaime Foxx, Bryson Tiller & MORE" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen
+                        id="iframe-1"
+                    ></iframe>
+
+                    <iframe 
+                        width="100%" 
+                        height="200" 
+                        class="d-none"
+                        src="https://www.youtube.com/embed/MN7yfV4UuCI" 
+                        title="How To Build A Business That Works | Brian Tracy #GENIUS" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen
+                    ></iframe>
+
+                    <iframe 
+                            width="100%" 
+                            height="200" 
+                            src="https://www.youtube.com/embed/RzcB3idwXEQ" 
+                            title="MY FOREX TRADING JOURNEY - KES 100,000 WITHDRAW | KENYAN FOREX TRADER" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            id="iframe-3"
+                        >
+                        </iframe>
+
+                    <div class="video-caption">
+                        <div>
+                            <div id="caption-title">Add Campaign</div>
+                            <span id="caption">(Video Brand Campaign)</span>
+                        </div>
+
+                        <span>
+                            <i class="fa fa-angle-right"></i>
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="div-section d-none">
+                
                 <div class="collapse">
                     <div class="collapse-toggler" data-id="1">
                         <div class="toggle-caret">
@@ -461,6 +605,7 @@
         this.data = data;
         this.dataItems = [];
         this.activeZip;
+        this.selectedZips = [];
         this.activeId = "Absentee Owners";
 
         this.setData = (data) => {
@@ -493,6 +638,69 @@
 
         this.updateLeads = (leads) => {
             this.leads = leads;
+        }
+
+        this.updateSelectedZips = (zipEntry) => {
+            let zip = this.selectedZips.find(zp => zp.zipcode == zipEntry.zipcode);
+
+            if(!zip) {
+                this.selectedZips.push(zipEntry);
+            }
+        }
+
+        this.updateSelectedZipsList = () => {
+            let total = this.selectedZips.reduce((a,b) => a + parseInt(b[this.activeId]), 0);
+            console.log(total);
+
+            // update count
+            document.getElementById("lead-count").innerHTML = `
+                <div>Selected Zipcode Total:</div>
+                <div class="lead-count">${total}</div>
+            `;
+
+            // list 
+            let zipList = document.getElementById("zip-list");
+            zipList.innerHTML = "";
+            this.selectedZips.forEach(zipEntry => {
+                zipList.innerHTML += `<div class="selected-zip">
+                    <div class="remove-zip" data-id="${zipEntry.zipcode}">
+                        <i class="fa fa-times"></i>
+                    </div>
+
+                    <div class="zipcode">
+                        <div>Zipcode:</div>
+                        <div>${zipEntry.zipcode}</div>
+                    </div>
+
+                    <div class="border"></div>
+
+                    <div class="lead">
+                        <div>Lead:</div>  
+                        <div>${zipEntry[this.activeId]}</div>  
+                    </div>
+                </div>`;
+            });
+
+            this.fireRemoveListener();
+        }
+
+
+        this.fireRemoveListener = () => {
+            let removeBtns = document.querySelectorAll(".remove-zip");
+            console.log(removeBtns);
+
+            removeBtns.forEach(btn => {
+                btn.onclick = (e) => {
+                    let { dataset : { id } } = e.target;
+
+                    this.removeSelectedZip(id);
+                }
+            })
+        }
+
+        this.removeSelectedZip = (zipcode) => {
+            this.selectedZips = this.selectedZips.filter(zip => zip.zipcode !== zipcode);
+            this.updateSelectedZipsList();
         }
 
         this.renderVisual = () => {
@@ -613,8 +821,22 @@
                     </div>
 
                     <div class="marker-inner"><b>Median Price: $${medianVal}k </b></div>
+
+                    <div class="btn add-zip" id="add-zip" data-id="${item.zipcode}">Add ZIP</div>
                 </div>`
                 )
+
+            // popup events
+            popup.on('open', () => {
+                let btnAdd = document.querySelector(".btn.add-zip");
+                btnAdd.onclick = (e) => {
+                    let { dataset: { id } } = e.target;
+
+                    let entry = this.data.find(entry => entry.zipcode == id);
+                    this.updateSelectedZips(entry);
+                    this.updateSelectedZipsList();
+                }
+            });
 
             // marker instance
             let markerInst = new mapboxgl.Marker({element:el});
@@ -626,11 +848,17 @@
             };
 
             el.onmouseenter = () => { 
-                markerInst.togglePopup(); 
+                // close any other popup
+                this.markers.forEach(mkr => {
+                    let markerPopup = mkr.getPopup();
+                    markerPopup.remove();
+                });
+
+                markerInst.togglePopup();
             };
 
             el.onmouseleave = () => { 
-                markerInst.togglePopup(); 
+                // markerInst.togglePopup(); 
             };
 
             markerInst
@@ -786,6 +1014,8 @@
         });
 
         document.getElementById('lead-info').innerHTML = "";
+        visualInstance.selectedZips = [];
+        visualInstance.updateSelectedZipsList();
 
     }
 
@@ -869,9 +1099,61 @@
     document.getElementById("close-side-tab").onclick = (e) => {
         e.stopPropagation();
         sideTab.classList.remove("active");
+
+        // reset the side tab
+        campaignSection.classList.add('d-none');
+        sectionZips.classList.remove('d-none');
     }
 
+    // visual toggler
+    let visualTabs = document.querySelector(".visual-tabs");
+    document.getElementById("dropdown-toggler").onclick = (e) => {
+        visualTabs.classList.toggle('active');
+    }
+
+    // next-item toggler
+    let nextButton = document.getElementById("next-btn");
+    let campaignSection = document.querySelector(".campaign-section");
+    let sectionZips = document.querySelector(".section-zips");
+
+    nextButton.onclick = (e) => {
+        campaignSection.classList.remove('d-none');
+        sectionZips.classList.add('d-none');
+    }
+
+    // back item toggler
+    let videoSection = document.querySelector(".video");
+    let videoTogglers = document.querySelectorAll(".campaign-toggler");
+    videoTogglers.forEach(toggler => {
+        toggler.onclick = (e) => {
+            let { dataset : { id, text } } = e.target;
+            console.log(e.target);
+
+            videoSection.classList.toggle('d-none');
+
+            // display specific iframe
+            let iframes = document.querySelectorAll('iframe');
+            iframes.forEach(iframe => {
+                console.log(`iframe-${id}`);
+
+                if(iframe.id == `iframe-${id}`) {
+                    iframe.classList.remove('d-none');
+
+                    return iframe;
+                }
+
+                iframe.classList.add('d-none');
+            });
+
+            // update the caption text
+            document.querySelector(".video-caption #caption").innerHTML = `(${text})`;
+        }
+    });
     
+
+    // close video section
+    let closeVideoButton = document.getElementById("close-video");
+    closeVideoButton.onclick = (e) => videoSection.classList.toggle('d-none');
 
     
     
