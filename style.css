@@ -322,7 +322,7 @@ input:focus-visible {
 /* logo section */
 .logo-container {
     position: absolute;
-    bottom: 20px;
+    bottom: 35px;
     left:0px;
     margin:10px;
     z-index: 2;
