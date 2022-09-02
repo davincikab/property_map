@@ -97,6 +97,26 @@ body {
     background-color: #6CF4F6;
     color:var(--dark);
     font-weight: 600;
+    transition: all 0.2s linear;
+}
+
+.tab-toggler.on-add {
+    background-image: linear-gradient(40deg, #6D28AA, #6CF4F6);
+}
+
+.tab-toggler #zip-count {
+    position: absolute;
+    top:-5px;
+    left:10px;
+
+    background-color: var(--white);
+    min-height: 20px;
+    min-width: 20px;
+    border-radius: 50%;
+    color:var(--dark);
+    font-size: 0.8rem;
+
+    text-align: center;
 }
 
 .close-btn {
@@ -434,9 +454,9 @@ input:focus-visible {
 }
 
 .zip-count {
-    color:var(--white);
+    color: var(--white);
     width: 80%;
-    margin: 0 auto;
+    margin: 0.75rem auto;
     text-align: center;
 }
 
@@ -514,6 +534,7 @@ input:focus-visible {
 .campaign-toggler .icon {
     position: relative;
     width: 40px;
+    margin-left:1rem;
 }
 
 .campaign-toggler .icon span i {
@@ -774,14 +795,23 @@ span.marker-inner {
 .popup-content .address {
     text-align: center;
 }
+.popup-content .btn {
+    background-color: #6CF4F6;
+    color:var(--dark);
+    font-size: 1rem;
+}
 
+
+.popup-content .btn.on-add {
+    background-image: linear-gradient(90deg, #6D28AA, #6CF4F6);
+}
 
 
 /* utility classes */
 .buy-btn, .btn {
     background-color: #447a7b;
     padding:0.375rem 0.5rem;
-    color:var(--white) !important;
+    color:var(--white);
     width: 60%;
     border-radius: 5px;
     text-align: center;

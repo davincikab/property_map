@@ -40,6 +40,7 @@
                 </div>
 
                 <div class="tab-toggler" id="tab-toggler">
+                    <div class="cart-count" id="zip-count">0</div>
                     <div>Lead Hopper</div>
 
                     <span>
@@ -48,7 +49,7 @@
                 </div>
 
                 <!-- visual lead toggler -->
-                <div class="visual-toggler" id="dropdown-toggler">
+                <div class="visual-toggler" id="dropdown-toggler" style="display: none;">
                     <span class="tab-text">Lead Type</span>
                     <span><i class="fa fa-angle-down"></i></span>
                 </div>
@@ -648,6 +649,15 @@
 
             if(!zip) {
                 this.selectedZips.push(zipEntry);
+
+                let toggler = document.getElementById("tab-toggler")
+                toggler.classList.add('on-add');
+                
+                setTimeout(() => {
+                    toggler.classList.remove('on-add');
+                }, 500);
+
+
             }
         }
 
@@ -661,7 +671,10 @@
                 <div class="lead-count">${total}</div>
             `;
 
-            // list 
+            // update zip count
+            document.getElementById("zip-count").innerHTML = this.selectedZips.length;
+
+            // update zip list 
             let zipList = document.getElementById("zip-list");
             zipList.innerHTML = "";
             this.selectedZips.forEach(zipEntry => {
@@ -814,7 +827,7 @@
             
             // popup
             let medianVal = this.formatAmount(item);
-            let popup = new mapboxgl.Popup({focusAfterOpen:false})
+            let popup = new mapboxgl.Popup({focusAfterOpen:false, anchor:'top'})
                 .setHTML(`<div class="popup-content">
                     <div class="visual-description">
                         <div class="address">
@@ -838,6 +851,10 @@
                     let entry = this.data.find(entry => entry.zipcode == id);
                     this.updateSelectedZips(entry);
                     this.updateSelectedZipsList();
+
+
+                    btnAdd.classList.add('on-add');
+                    setTimeout(() => btnAdd.classList.remove('on-add'), 500);
                 }
             });
 
