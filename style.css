@@ -336,9 +336,9 @@ input:focus-visible {
 /* logo section */
 .logo-container {
     position: absolute;
-    bottom: 10vw;
+    bottom: 5vw;
     left:0px;
-    margin:10px 10px 30px;
+    margin:10px 10px 10px;
     z-index: 2;
     display: flex;
     color:var(--white);
@@ -933,6 +933,12 @@ div.btn > * {
 
     .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
         height: 55px;
+    }
+
+    .logo-container {
+        bottom: 10vw;
+        left:0px;
+        margin:10px 10px 10px;
     }
 }
 
