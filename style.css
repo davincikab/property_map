@@ -489,12 +489,16 @@ input:focus-visible {
     font-size: 22px;
     color:var(--white);
     margin: 1rem 0 1.5rem;
+    height: 50px;
+    text-align: center;
+    width: 80%;
 }
 
 .campaign-section .campaign-toggler {
     margin-bottom: 1rem;
     width: 80%;
     padding: 0.5rem;
+    height: 50px;
 }
 
 .side-tab .campaign-toggler .icon > .toggle-caret {
