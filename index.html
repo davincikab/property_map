@@ -576,7 +576,13 @@
 
     function fitToFeatureBounds(feature) {
         let bbox = turf.bbox(feature.toJSON());
-        map.fitBounds(bbox, { padding:80 });
+
+        // if mobile
+        if(isMobile()) {
+            map.fitBounds(bbox, { padding:-120 });
+        } else {
+            map.fitBounds(bbox, { padding:80 });
+        }
     }
 
     // tab toggler
@@ -827,7 +833,7 @@
             
             // popup
             let medianVal = this.formatAmount(item);
-            let popup = new mapboxgl.Popup({focusAfterOpen:false, anchor:'top'})
+            let popup = new mapboxgl.Popup({focusAfterOpen:false,  offset:25})
                 .setHTML(`<div class="popup-content">
                     <div class="visual-description">
                         <div class="address">
@@ -1182,6 +1188,31 @@
     // Video: How the data benefits the user.
     // Collapsible data
     // On geocode: Bug, does not display the points initially, no filtering: Missing State/Regions
+    function isMobile() {
+        var hasTouchScreen = false;
+
+        if ("maxTouchPoints" in navigator) {
+            hasTouchScreen = navigator.maxTouchPoints > 0;
+        } else if ("msMaxTouchPoints" in navigator) {
+            hasTouchScreen = navigator.msMaxTouchPoints > 0;
+        } else {
+            var mQ = window.matchMedia && matchMedia("(pointer:coarse)");
+            if (mQ && mQ.media === "(pointer:coarse)") {
+                hasTouchScreen = !!mQ.matches;
+            } else if ('orientation' in window) {
+                hasTouchScreen = true; // deprecated, but good fallback
+            } else {
+                // Only as a last resort, fall back to user agent sniffing
+                var UA = navigator.userAgent;
+                hasTouchScreen = (
+                    /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
+                    /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
+                );
+            }
+        }
+
+        return hasTouchScreen;
+    }
 </script>
 </body>
 </html>
