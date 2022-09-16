@@ -121,7 +121,7 @@ body {
 
 .close-btn {
     position: absolute;
-    top:30px;
+    top:0px;
     right: 0px;
     margin: 0.25rem 0.7rem 0;
     color:var(--white);
@@ -502,23 +502,65 @@ input:focus-visible {
 .campaign-section {
     width: auto;
     margin: 0.5rem;
-    padding: 0.75rem
+    /* padding: 0.75rem; */
+    position: absolute;
+    top: 0px;
+    width: 350px;
+    right:-350px;
+    z-index: 2;
+    background-color: var(--dark);
+    transition: right 0.5s linear;
+}
+
+.campaign-section.open {
+    right: 0px;
 }
 
 .section-title {
     font-size: 22px;
     color:var(--white);
-    margin: 1rem 0 1.5rem;
+    margin: 0rem 0 1rem;
     height: 50px;
     text-align: center;
     width: 80%;
 }
 
 .campaign-section .campaign-toggler {
+    position: relative;
     margin-bottom: 1rem;
     width: 80%;
     padding: 0.5rem;
-    height: 50px;
+    height: 35px;
+}
+
+.campaign-toggler .select-div {
+    position: absolute;
+    background-color: rgba(253, 253, 253, 0.45);
+    top:0;
+
+    width: 100%;
+    height: 100%;
+    left: -0%;
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.campaign-toggler .select-div .toggle-caret {
+    font-size: 1.5rem;
+    height: 40px;
+    width: 40px;
+    color:var(--white);
+}
+
+.campaign-section .campaign-toggler .select-div { 
+    display: none;
+}
+
+.campaign-section .campaign-toggler.selected > .select-div {
+    display: flex;
 }
 
 .side-tab .campaign-toggler .icon > .toggle-caret {
@@ -545,14 +587,21 @@ input:focus-visible {
     position: absolute;
     top:0px;
     bottom: 0;
-    left:0;
-    right: 0px;
+    width: 350px;
+    right: -350px;
+    z-index: 3;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
     background-color: var(--dark2);
+
+    transition: right 0.5s linear;
+}
+
+.video.open {
+    right:0px;
 }
 
 .video-info {
@@ -571,12 +620,12 @@ input:focus-visible {
     margin-top: 10vh;;
 }
 
-.video-info .video-caption {
+.video-info .video-caption, .video-caption {
     position: absolute;
     bottom: -100px;
     width: 80%;
     left: 10%;
-    height: 50px;
+    /* height: 40px; */
     color: white;
     text-align: center;
     padding: 0.5rem;
@@ -596,10 +645,110 @@ input:focus-visible {
     border-radius: 6px;
 }
 
-.video-caption #caption {
+.video-caption #caption, .caption {
     font-size: 14px;
     color:#C2C2C2;
 }
+
+.video-caption > * {
+    pointer-events: none;
+}
+
+.video-caption#final-step {
+    position: relative;
+    margin-left: 0px;
+    bottom: 0px;
+    margin: 0 auto;
+    left: 0;
+    width: 70%;
+}
+
+
+.campaign-success-progress {
+    margin:1rem auto;
+    width: 80%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.campaign-success-progress .progress-round {
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+    border:10px solid #6CF4F6;
+    box-shadow: 0px 0px 1.5rem #3a9ea0, 
+                0px 0px 1rem #50acad,
+                0px 0px 0.75rem #325d5e
+                ;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-round #percentage {
+    font-weight: 600;
+    color:var(--white);
+}
+
+
+.user-info-form {
+    position: absolute;
+    top:0px;
+    right:-350px;
+    height: 100%;
+    width:350px;
+    z-index: 2;
+    background-color: var(--dark);
+    transition: right 0.5s linear;
+}
+
+.user-info-form.open {
+    right: 0px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+form .input-group {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin:0 auto;
+    color:var(--white);
+    margin-bottom: 1rem;
+}
+
+.input-group input {
+    line-height: 25px;
+    height: 25px;
+    background-color: var(--light1);
+    border-radius: 3px;
+    border:none;
+    color:var(--white);
+    padding:0 0.5rem
+}
+
+::placeholder {
+    /* color:#555 !important; */
+    color: red;
+    opacity: 1; 
+}
+
+form .video-caption {
+    position: relative !important;
+    bottom:0px;
+    left: 0;
+    margin:0 auto;
+    width: 60%;
+}
+
 
 /* collapse-section */
 .div-section {
@@ -684,7 +833,8 @@ input:focus-visible {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 1.5rem;
+    margin: 1rem 0 0;
+    position: relative;
 }
 
 .section-header p {
@@ -960,6 +1110,10 @@ div.btn > * {
         margin-top: 10vh;
     }
 
+    .campaign-success-progress {
+        margin:2.5rem auto;
+    }
+
     .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
         height: 55px;
     }
@@ -968,6 +1122,22 @@ div.btn > * {
         bottom: 10vw;
         left:0px;
         margin:10px 10px 10px;
+    }
+
+    .section-header {
+        margin-bottom: 1rem;
+        height: 150px;
+    }
+
+    .user-info-form, .campaign-section, .video {
+        width: 100%;
+        right: -100%;
+
+        height: 100%;
+    }
+
+    .input-group input {
+        height: 30px;
     }
 }
 

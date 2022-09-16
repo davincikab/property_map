@@ -19,6 +19,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 </head>
 <body>
     <div class="wrapper-container">
@@ -110,7 +113,7 @@
             <div class="lead-info d-none" id="lead-info"></div>
 
             <!-- dropdown sections -->
-            <div class="section-header">
+            <div class="section-header" id="section-header">
                 <div>
                     <img src="logo.png" alt="" height="80px" width="80px">
                 </div>
@@ -144,12 +147,31 @@
                 </div>
             </div>
 
-            <div class="campaign-section d-none">
+            <div class="campaign-section" id="campaign-section">
+                <div class="section-header">
+                    <div>
+                        <img src="logo.png" alt="" height="80px" width="80px">
+                    </div>
+    
+                    <div class="close-btn close-side-tab" id="close-campaign-section">
+                        <span>
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+
                 <div class="section-title">
                     Campaign Types
                 </div>
 
-                <div class="campaign-toggler" data-id="1" data-text="Video Brand Campaign">
+                <div class="campaign-toggler" data-id="1" data-text="Video Brand Campaign" id="video">
+
+                    <div class="select-div">
+                        <div class="toggle-caret">
+                            <i class="fa fa-check"></i>
+                        </div>
+                    </div>
+
                     <div class="icon">
                         <div class="toggle-caret">
                             <i class="fa fa-play"></i>
@@ -164,7 +186,13 @@
                     <div>Video Brand Campaign</div>
                 </div>
 
-                <div class="campaign-toggler" data-id="2" data-text="Text Message Campaign">
+                <div class="campaign-toggler" data-id="2" data-text="Text Message Campaign" id="text">
+                    <div class="select-div">
+                        <div class="toggle-caret">
+                            <i class="fa fa-check"></i>
+                        </div>
+                    </div>
+
                     <div class="icon">
                         <div class="toggle-caret">
                             <i class="fa fa-bars"></i>
@@ -180,7 +208,13 @@
                     <div>Text Message Campaign</div>
                 </div>
 
-                <div class="campaign-toggler" data-id="3" data-text="Call for Appts Campaign">
+                <div class="campaign-toggler" data-id="3" data-text="Call for Appts Campaign" id="isa">
+                    <div class="select-div">
+                        <div class="toggle-caret">
+                            <i class="fa fa-check"></i>
+                        </div>
+                    </div>
+
                     <div class="icon">
                         <div class="toggle-caret">
                             <i class="fa fa-phone"></i>
@@ -192,9 +226,73 @@
                     
                     <div>Call for Appts Campaign</div>
                 </div>
+
+                <div class="campaign-success-progress">
+                    <div class="progress-round">
+                        <div id="percentage">100%</div>
+                    </div>
+                </div>
+
+
+                <!-- final step btn: toggle the form -->
+                <div class="video-caption" id="final-step">
+                    <div class="">
+                        <div id="caption-title">Final Step</div>
+                        <span id="caption">(Talk with Fulfillment Team)</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="video d-none">
+            <div class="user-info-form" id="user-form">
+                <!-- header -->
+                <div class="form-header section-header">
+                    <div>
+                        <img src="logo.png" alt="" height="80px" width="80px">
+                    </div>
+    
+                    <div class="close-btn close-side-tab" id="close-user-form">
+                        <span>
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <form action="/" id="input-form" method="post">
+                    <div class="input-group">
+                        <label for="first_name">First Name</label>
+                        <input type="text" name="first_name" id="first_name" placeholder="Enter" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" name="last_name" id="last_name" placeholder="Enter" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="brokerage_name">Brokerage Name</label>
+                        <input type="text" name="a2" id="brokerage_name" placeholder="Enter" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="a1" id="email" placeholder="Enter" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="phone_number">Phone Number</label>
+                        <input type="text" name="a3" id="phone_number" placeholder="Enter" required>
+                    </div>
+
+                    <button type="submit" class="btn-submit video-caption" id="user-info">
+                        <div class="">
+                            <div id="caption-title">Final Step</div>
+                            <span class="caption">(Talk with Fulfillment Team)</span>
+                        </div>
+                    </button>
+                </form>
+            </div>
+
+            <div class="video">
                 <div class="close-btn" id="close-video">
                     <span>
                         <i class="fa fa-times"></i>
@@ -237,8 +335,8 @@
                         >
                         </iframe>
 
-                    <div class="video-caption">
-                        <div>
+                    <div class="video-caption" data-campaign="video" id="add-campaign">
+                        <div class="">
                             <div id="caption-title">Add Campaign</div>
                             <span id="caption">(Video Brand Campaign)</span>
                         </div>
@@ -341,6 +439,7 @@
     </div>
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoiaGlnaGlxIiwiYSI6ImNsNnVwbHFhMDBsamozbnA1ajBraHlqbmMifQ.mP1mWm5OxGRKfiN0qiH-bg';
+    
     const map = new mapboxgl.Map({
         container: 'map', 
         style: 'mapbox://styles/highiq/cl76dudld001114pbuykepmna',
@@ -967,6 +1066,264 @@
 
     let visualInstance = new Visuals();
 
+    // handling campaign selection
+    let Campaigns = function() {
+        this.campaignSection = document.getElementById("campaign-section");
+        this.closeCampaignSection = document.getElementById("close-campaign-section");
+        this.percentageText = document.getElementById("percentage");
+
+        // next-item toggler
+        this.nextButton = document.getElementById("next-btn");
+        this.campaignSection = document.querySelector(".campaign-section");
+        // let sectionZips = document.querySelector(".section-zips");
+
+
+        // back item toggler
+        this.videoSection = document.querySelector(".video");
+        this.videoTogglers = document.querySelectorAll(".campaign-toggler");
+        this.addCampaignBtn = document.getElementById("add-campaign");
+    
+
+        // close video section
+        this.closeVideoButton = document.getElementById("close-video");
+
+        this.campaigns = [
+            {
+                name:'Video Brand Campaign',
+                id:'video',
+                videoUrl:"",
+                icon:'',
+                percentage:56,
+            },
+            {
+                name:'Text Message Campaign',
+                id:'text',
+                videoUrl:"",
+                icon:'',
+                percentage:44,
+            },
+            {
+                name:'Call for Appts Campaign',
+                id:'isa',
+                videoUrl:"",
+                icon:'',
+                percentage:108,
+            }
+        ];
+
+        this.selectedCampaigns = [];
+        this.addCampaignBtn = document.getElementById("add-campaign");
+
+        this.init = () => {
+            this.fireListeners();
+            this.handleFinalStep();
+        }
+
+        this.renderCampaignTogglers = () => {
+
+        }
+
+        this.toggleCampaignSection = () => {
+            this.campaignSection.classList.toggle('open');
+        }
+
+        this.toggleVideoSection = () => {
+            this.videoSection.classList.toggle("open");
+        }
+
+        this.updatePercentageText = () => {
+            let percentages = this.selectedCampaigns.map(id => {
+                let percentage = this.campaigns.find(l => l.id == id).percentage;
+
+                return percentage;
+            });
+
+            let total = percentages.reduce((a,b) => a + b, 0);
+            this.percentageText.innerHTML = `${total}%`;
+        }
+
+        this.fireListeners = () => {
+
+            this.addCampaignBtn.onclick = (e) => this.handleClick(e);
+            this.nextButton.onclick = (e) => {
+                this.toggleCampaignSection();
+            }
+
+            this.closeVideoButton.onclick = (e) => {
+                e.stopPropagation();
+
+                this.toggleVideoSection();
+            }
+
+            // togglers
+            this.videoTogglers.forEach(toggler => {
+                toggler.onclick = (e) => {
+                    this.handleTogglerClick(e);
+                }
+            });
+
+            this.closeCampaignSection.onclick = (e) => {
+                this.toggleCampaignSection();
+            }
+        }
+
+        this.handleTogglerClick = (e) => {
+            let { dataset : { id, text } } = e.target;
+            let target = e.target;
+            console.log(e.target);
+
+            if(target.classList.contains('selected')) {
+                target.classList.remove('selected');
+
+                // remove the campaign from selection
+                this.selectedCampaigns = this.selectedCampaigns.filter(entry => entry != target.id);
+                this.updatePercentageText();
+                return;
+            }
+
+            
+            this.toggleVideoSection();
+            this.addCampaignBtn.setAttribute('data-campaign', e.target.id);
+
+            // display specific iframe
+            let iframes = document.querySelectorAll('iframe');
+            iframes.forEach(iframe => {
+                console.log(`iframe-${id}`);
+
+                if(iframe.id == `iframe-${id}`) {
+                    iframe.classList.remove('d-none');
+
+                    return iframe;
+                }
+
+                iframe.classList.add('d-none');
+            });
+
+            // update the caption text
+            document.querySelector("#add-campaign #caption").innerHTML = `(${text})`;
+        }
+
+        this.handleClick = (e) => {
+            console.log("Button Click");
+
+            let { dataset : {campaign} } = e.target;
+
+            if(this.selectedCampaigns.indexOf(campaign) != -1) {
+                this.selectedCampaigns = this.selectedCampaigns.filter(entry => entry != campaign);
+                this.handleCampaignSelection(campaign.toLowerCase(), true);
+            } else {
+                this.selectedCampaigns.push(campaign);
+                this.handleCampaignSelection(campaign.toLowerCase(), false);
+            }
+
+            this.toggleVideoSection();
+            this.updatePercentageText();
+        }
+
+        this.handleCampaignSelection = (campaignId, isSelected=true) => {
+            let element = document.getElementById(campaignId);
+
+            console.log("Select Campagn btn");
+            if(isSelected) {
+                element.classList.remove("selected")
+            } else {
+                element.classList.add("selected");
+            }
+        }
+
+        this.handleFinalStep = () => {
+            let openFormBtn = document.getElementById("final-step");
+            openFormBtn.onclick = (e) => {
+                formInstance.toggleForm();
+                // this.toggleForm();
+            }
+        }
+    }
+
+    let campaignInstance = new Campaigns();
+    campaignInstance.init();
+
+    // form handler
+    let FormHandler = function() {
+        this.formSection = document.getElementById("user-form");
+        this.closeFormBtn = document.getElementById("close-user-form");
+
+        this.fields = {
+            first_name:"", //(first name)
+            last_name:"", //(last name)
+            a1:"", // email
+            a2:"", //(brokerage name)
+            a3:"", //(phone number)
+        };
+
+        this.init = () => {
+            let inputFields = document.querySelectorAll("form input");
+            inputFields.forEach(field => {
+                field.onchange = this.fieldOnchange;
+            });
+
+            this.formInput = document.getElementById("input-form");
+            this.formInput.onsubmit = (e) => {
+                e.preventDefault();
+
+                this.onSubmit(e);
+            }
+
+            this.closeFormBtn.onclick = (e) => {
+                this.toggleForm();
+            }
+        }
+
+        this.updateField = (name, value) => {
+            let fields = {...this.fields};
+            fields[name] = value;
+
+            this.fields = {...fields };
+        }
+
+        this.toggleForm = () => {
+            this.formSection.classList.toggle("open");
+        }
+
+        this.fieldOnchange = (e) => {
+            // validate
+            let {name, value} = e.target;
+            this.updateField(name, value);
+        }
+
+        // submit event
+        this.onSubmit = (e) => {
+            // e.preventDefault();
+
+            // construct the candley url
+            let formString = Object.keys(this.fields).map(key => `${key}=${this.fields[key]}`).join("&");
+            let campaignString = campaignInstance.selectedCampaigns.join(", ");
+            let zipCodesString = visualInstance.selectedZips.map(zp => zp.zipcode).join(", ");
+
+            // a4:"", //(zip codes selected)
+            // a5:"", //(campaign types selected)
+            // 
+            this.calendlyUrl = `https://calendly.com/highiq-marketing/strike-first-lead-campaign?${formString}&a5=${campaignString}&a4=${zipCodesString}`;
+            console.log(this.calendlyUrl);
+
+            this.updateAndDisplayCandley(this.calendlyUrl);
+        }
+
+        this.updateAndDisplayCandley = (url) => {
+            // Calendly.initPopupWidget(
+            //     {url}
+            // );
+
+            window.open(url, '_blank').focus();
+
+            // open a new url
+            return false;
+        }
+    }
+
+    let formInstance = new FormHandler();
+    formInstance.init();
+
     // get unclustered markers 
     const leads = {};
     let leadsOnScreen = {};
@@ -1127,8 +1484,8 @@
         sideTab.classList.remove("active");
 
         // reset the side tab
-        campaignSection.classList.add('d-none');
-        sectionZips.classList.remove('d-none');
+        // campaignSection.classList.add('d-none');
+        // sectionZips.classList.remove('d-none');
     }
 
     // visual toggler
@@ -1136,50 +1493,6 @@
     document.getElementById("dropdown-toggler").onclick = (e) => {
         visualTabs.classList.toggle('active');
     }
-
-    // next-item toggler
-    let nextButton = document.getElementById("next-btn");
-    let campaignSection = document.querySelector(".campaign-section");
-    let sectionZips = document.querySelector(".section-zips");
-
-    nextButton.onclick = (e) => {
-        campaignSection.classList.remove('d-none');
-        sectionZips.classList.add('d-none');
-    }
-
-    // back item toggler
-    let videoSection = document.querySelector(".video");
-    let videoTogglers = document.querySelectorAll(".campaign-toggler");
-    videoTogglers.forEach(toggler => {
-        toggler.onclick = (e) => {
-            let { dataset : { id, text } } = e.target;
-            console.log(e.target);
-
-            videoSection.classList.toggle('d-none');
-
-            // display specific iframe
-            let iframes = document.querySelectorAll('iframe');
-            iframes.forEach(iframe => {
-                console.log(`iframe-${id}`);
-
-                if(iframe.id == `iframe-${id}`) {
-                    iframe.classList.remove('d-none');
-
-                    return iframe;
-                }
-
-                iframe.classList.add('d-none');
-            });
-
-            // update the caption text
-            document.querySelector(".video-caption #caption").innerHTML = `(${text})`;
-        }
-    });
-    
-
-    // close video section
-    let closeVideoButton = document.getElementById("close-video");
-    closeVideoButton.onclick = (e) => videoSection.classList.toggle('d-none');
 
     
     
