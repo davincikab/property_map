@@ -24,6 +24,36 @@ body {
     overflow: hidden;
 }
 
+.spinner-container {
+    background-color: #000;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    z-index: 5;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.spinner {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 10px solid #6CF4F6;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner-text {
+    color:var(--white);
+}
 /* side tab */
 .side-tab {
     position: absolute;

@@ -25,6 +25,11 @@
 </head>
 <body>
     <div class="wrapper-container">
+        <div class="spinner-container" id="spinner-container">
+            <div class="spinner"></div>
+            <p class="spinner-text">Loading Data ...</p>
+        </div>
+
         <div class="map-container">
             <!-- <div class="top-tab">
                 <div class="tabs-right">
@@ -498,7 +503,9 @@
     map.on('load', function(e) {
         d3.csv('master_counts.csv')
         .then(data => {
-            visualInstance.setData(data);                
+            visualInstance.setData(data);  
+            
+            document.getElementById("spinner-container").classList.add("d-none");
         })
         .catch(console.error);
         
