@@ -248,7 +248,7 @@
                 </div>
             </div>
 
-            <div class="user-info-form" id="user-form">
+            <div class="user-info-form d-none" id="user-form">
                 <!-- header -->
                 <div class="form-header section-header">
                     <div>
@@ -1100,21 +1100,21 @@
                 id:'video',
                 videoUrl:"",
                 icon:'',
-                percentage:56,
+                percentage:36,
             },
             {
                 name:'Text Message Campaign',
                 id:'text',
                 videoUrl:"",
                 icon:'',
-                percentage:44,
+                percentage:36,
             },
             {
                 name:'Call for Appts Campaign',
                 id:'isa',
                 videoUrl:"",
                 icon:'',
-                percentage:108,
+                percentage:36,
             }
         ];
 
@@ -1123,7 +1123,6 @@
 
         this.init = () => {
             this.fireListeners();
-            this.handleFinalStep();
         }
 
         this.renderCampaignTogglers = () => {
@@ -1146,7 +1145,7 @@
             });
 
             let total = percentages.reduce((a,b) => a + b, 0);
-            this.percentageText.innerHTML = `${total}%`;
+            this.percentageText.innerHTML = `${total + 100}%`;
         }
 
         this.fireListeners = () => {
@@ -1172,6 +1171,8 @@
             this.closeCampaignSection.onclick = (e) => {
                 this.toggleCampaignSection();
             }
+            
+            this.handleFinalStep();
         }
 
         this.handleTogglerClick = (e) => {
@@ -1241,9 +1242,21 @@
         this.handleFinalStep = () => {
             let openFormBtn = document.getElementById("final-step");
             openFormBtn.onclick = (e) => {
-                formInstance.toggleForm();
+                // formInstance.toggleForm();
                 // this.toggleForm();
+
+                // construct the candley url
+                // let formString = Object.keys(this.fields).map(key => `${key}=${this.fields[key]}`).join("&");
+                let campaignString = this.selectedCampaigns.join(", ");
+                let zipCodesString = visualInstance.selectedZips.map(zp => zp.zipcode).join(", ");
+
+                // url
+                this.calendlyUrl = `https://calendly.com/highiq-marketing/strike-first-lead-campaign?a5=${campaignString}&a4=${zipCodesString}`;
+                console.log(this.calendlyUrl);
+                window.open(this.calendlyUrl, '_blank').focus();
             }
+
+            
         }
     }
 
@@ -1273,7 +1286,7 @@
             this.formInput.onsubmit = (e) => {
                 e.preventDefault();
 
-                this.onSubmit(e);
+                // this.onSubmit(e);
             }
 
             this.closeFormBtn.onclick = (e) => {
