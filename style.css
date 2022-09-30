@@ -15,12 +15,15 @@ body {
     padding: 0; 
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
+    height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+    height: calc(var(--vh, 1vh) * 100);
 }
 
 .wrapper-container {
     position: relative;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+    height: calc(var(--vh, 1vh) * 100);
     overflow: hidden;
 }
 
@@ -1020,12 +1023,21 @@ div.btn > * {
     display: none !important;
 }
 
+.video-call-btn {
+    display: none;
+}
+
 
 /* mobile styling */
 @media screen and (max-width:480px) {
+    .wrapper-container { 
+        height: 100%;
+    }
+
     .side-tab {
         z-index: 3;
         width: 100%;
+        height: 100%;
         right: -100%;
     }
 
@@ -1074,7 +1086,7 @@ div.btn > * {
         left:0.75rem;
         z-index: 2;
         display: flex !important;
-        height: 50px;
+        height: 55px;
         width: 44%;
 
 
@@ -1113,10 +1125,44 @@ div.btn > * {
         text-align: center;
     }
 
+    .video-call-btn {
+        position: fixed;
+        bottom: 9vw;
+        right: 0px;
+        background-color: var(--white);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        /* padding: 15px 0px 15px 0px; */
+        padding:0 5px 0px 10px;
+        border-radius: 20px;
+        height: 55px;
+        margin: 30px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color:#9421FA;
+    }
+
+    .video-call-btn span {
+        background-color: #9421FA;
+        margin-left: 1rem;
+        color:var(--white);
+        font-size: 1.25rem;
+        border-radius: 50%;
+
+        height: 40px;
+        width: 40px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .refresh-btn {
         position: fixed;
-        bottom: 10vw;
+        bottom: 9vw;
         right: 0px;
+        left: 0px;
         z-index: 2;
         margin: 30px;
         border-radius: 6px;
@@ -1144,14 +1190,24 @@ div.btn > * {
         margin:2.5rem auto;
     }
 
+    #geocoder {
+        margin-left: 20%;
+    }
+
     .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
         height: 55px;
+        /* width: 80% !important; */
     }
 
     .logo-container {
-        bottom: 10vw;
+        top: 0vw;
+        height: 55px;
         left:0px;
         margin:10px 10px 10px;
+    }
+
+    .logo-container div {
+        display: none;
     }
 
     .section-header {
